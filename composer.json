@@ -1,0 +1,26 @@
+{
+    "name": "dubk0ff/oc-Socialite-plugin",
+    "type": "october-plugin",
+    "description": "Socialite plugin for October CMS",
+    "keywords": ["october", "octobercms", "cms", "user", "socialite"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valentin Dubkov",
+            "email": "dubkov1401@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "composer/installers": "~1.0",
+        "laravel/socialite": "^5.1",
+        "socialiteproviders/google": "^4.1",
+        "socialiteproviders/instagram": "^4.1",
+        "socialiteproviders/odnoklassniki": "^4.1",
+        "socialiteproviders/twitter": "^4.1",
+        "socialiteproviders/vkontakte": "^4.2",
+        "socialiteproviders/yandex": "^4.1"
+    },
+    "minimum-stability": "dev"
+}

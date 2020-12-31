@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Service
+
+# Model Form Field configuration
+form: $/dubk0ff/socialite/models/service/fields.yaml
+
+# Model Class name
+modelClass: Dubk0ff\Socialite\Models\Service
+
+# Default redirect location
+defaultRedirect: dubk0ff/socialite/services
+
+# Create page
+create:
+    title: Create Service
+    redirect: dubk0ff/socialite/services/update/:id
+    redirectClose: dubk0ff/socialite/services
+
+# Update page
+update:
+    title: Edit Service
+    redirect: dubk0ff/socialite/services
+    redirectClose: dubk0ff/socialite/services
+
+# Preview page
+preview:
+    title: Preview Service

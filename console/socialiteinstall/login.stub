@@ -1,0 +1,6 @@
+title = "Socialite Login"
+url = "/login/:{{provider_name}}"
+is_hidden = 0
+
+[socialiteLogin]
+==

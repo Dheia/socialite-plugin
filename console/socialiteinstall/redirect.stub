@@ -1,0 +1,7 @@
+title = "Socialite Redirect"
+url = "/login/:{{provider_name}}/callback"
+is_hidden = 0
+
+[socialiteRedirect]
+redirect = "home"
+==

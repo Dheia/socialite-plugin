@@ -1,0 +1,6 @@
+1.0.1:
+    - Initialize Socialite plugin.
+    - Run table migrations.
+    - create_services_table.php
+    - create_users_socialites_table.php
+    - update_users_email_column.php
