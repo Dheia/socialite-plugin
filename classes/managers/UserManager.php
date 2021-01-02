@@ -46,26 +46,7 @@ class UserManager
      */
     protected function getUser(): UserModel
     {
-        $user = $this->getUserBySocialiteAccount();
-
-        // TODO: доработать активацию при необходимости
-
-//        if ($user->email !== $this->getSocialiteUserEmail() && ! $user->isVerify()) {
-//            $user->update(['email' => $this->getSocialiteUserEmail()]);
-//
-//            $manager = new ActivationManager();
-//            $manager->activateForce($user);
-//            $manager->forgetSessionEmail();
-//        }
-
-//
-//        if (!$user->isVerify()) {
-//            $manager = new ActivationManager();
-//            $manager->activateForce($user);
-//            $manager->forgetSessionEmail();
-//        }
-
-        return $user;
+        return $this->getUserBySocialiteAccount();
     }
 
     /**
