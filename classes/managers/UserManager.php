@@ -3,7 +3,9 @@
 use Auth;
 use Dubk0ff\Socialite\Classes\Helpers\SocialAuthHelper;
 use Dubk0ff\Socialite\Models\Socialite as SocialiteModel;
+use Laravel\Socialite\AbstractUser;
 use RainLab\User\Models\User as UserModel;
+use RainLab\User\Models\UserGroup as UserGroupModel;
 use Request;
 use Str;
 
@@ -13,20 +15,20 @@ use Str;
  */
 class UserManager
 {
-    /** @var SocialiteManager */
-    protected $socialiteManager;
+    /** @var AbstractUser */
+    protected $socialiteUser;
 
     /** @var string */
     protected $provider;
 
     /**
      * UserManager constructor.
-     * @param $socialiteUser
+     * @param AbstractUser $socialiteUser
      * @param string $provider
      */
-    public function __construct($socialiteUser, string $provider)
+    public function __construct(AbstractUser $socialiteUser, string $provider)
     {
-        $this->socialiteManager = new SocialiteManager($socialiteUser);
+        $this->socialiteUser = $socialiteUser;
         $this->provider = $provider;
     }
 
@@ -35,16 +37,16 @@ class UserManager
     */
     public function login(): void
     {
-        Auth::login($this->getUserAccount(), false);
+        Auth::login($this->getUser(), false);
         SocialAuthHelper::init();
     }
 
     /**
      * @return UserModel
      */
-    protected function getUserAccount(): UserModel
+    protected function getUser(): UserModel
     {
-        $user = $this->getUserAccountSocialite();
+        $user = $this->getUserBySocialiteAccount();
 
         // TODO: доработать активацию при необходимости
 
@@ -69,31 +71,27 @@ class UserManager
     /**
      * @return UserModel
      */
-    protected function getUserAccountSocialite(): UserModel
+    protected function getUserBySocialiteAccount(): UserModel
     {
-        $socialiteAccount = SocialiteModel::whereProviderId($this->socialiteManager->getId())->whereProvider($this->provider)->first();
+        $socialiteAccount = SocialiteModel::whereProviderId($this->socialiteUser->getId())->whereProvider($this->provider)->first();
 
         return ($socialiteAccount === null)
-            ? $this->registerSocialiteAccount()
+            ? $this->getOrCreateUserAccount()
             : $socialiteAccount->user;
     }
 
     /**
      * @return UserModel
      */
-    protected function registerSocialiteAccount(): UserModel
+    protected function getOrCreateUserAccount(): UserModel
     {
-        $user = UserModel::whereEmail($this->socialiteManager->getEmail())->first();
+        $user = UserModel::whereEmail($this->socialiteUser->getEmail())->first();
 
         if ($user === null) {
-            $user = $this->registerNewUser();
+            $user = $this->createUserAccount();
         }
 
-        SocialiteModel::create([
-            'provider' => $this->provider,
-            'provider_id' => $this->socialiteManager->getId(),
-            'user_id' => $user->id,
-        ]);
+        $this->createSocialiteAccount($user->id);
 
         return $user;
     }
@@ -101,14 +99,13 @@ class UserManager
     /**
      * @return UserModel
      */
-    protected function registerNewUser(): UserModel
+    protected function createUserAccount(): UserModel
     {
         $password = Str::random(10);
         $userIp = Request::ip();
         $data = [
-            'name'                  => $this->socialiteManager->getFirstName(),
-            'surname'               => $this->socialiteManager->getLastName(),
-            'email'                 => $this->socialiteManager->getEmail(),
+            'name'                  => $this->socialiteUser->getName(),
+            'email'                 => $this->socialiteUser->getEmail(),
             'password'              => $password,
             'password_confirmation' => $password,
             'last_ip_address'       => $userIp,
@@ -116,8 +113,22 @@ class UserManager
         ];
 
         $user = Auth::register($data, true);
-        $user->addGroup(2);
+        $group = UserGroupModel::whereId(2)->first(); // TODO: вынести в настройки
+        $user->addGroup($group);
 
         return $user;
+    }
+
+    /**
+     * @param int $userId
+     * @return void
+     */
+    protected function createSocialiteAccount(int $userId): void
+    {
+        SocialiteModel::create([
+            'provider' => $this->provider,
+            'provider_id' => $this->socialiteUser->getId(),
+            'user_id' => $userId,
+        ]);
     }
 }

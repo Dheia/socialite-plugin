@@ -36,7 +36,11 @@ class Socialite extends Model
     protected $guarded = ['*'];
 
     /** @var array */
-    protected $fillable = ['user_id', 'provider_id', 'provider'];
+    protected $fillable = [
+        'user_id',
+        'provider_id',
+        'provider'
+    ];
 
     /** @var array */
     protected $dates = [

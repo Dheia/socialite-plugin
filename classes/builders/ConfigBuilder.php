@@ -1,7 +1,8 @@
 <?php namespace Dubk0ff\Socialite\Classes\Builders;
 
+use Dubk0ff\Socialite\Classes\Helpers\Helper;
 use Dubk0ff\Socialite\Classes\Managers\UrlManager;
-use Dubk0ff\Socialite\Models\Service;
+use Dubk0ff\Socialite\Models\Service as ServiceModel;
 use Exception;
 use SocialiteProviders\Manager\Config;
 
@@ -11,7 +12,7 @@ use SocialiteProviders\Manager\Config;
  */
 class ConfigBuilder
 {
-    /** @var Service */
+    /** @var ServiceModel */
     protected $service;
 
     /** @var UrlManager */
@@ -19,9 +20,9 @@ class ConfigBuilder
 
     /**
      * ConfigBuilder constructor.
-     * @param Service $service
+     * @param ServiceModel $service
      */
-    public function __construct(Service $service)
+    public function __construct(ServiceModel $service)
     {
         $this->service = $service;
         $this->urlManager = new UrlManager($this->service->provider);
@@ -37,21 +38,7 @@ class ConfigBuilder
             $this->service->client_id,
             $this->service->client_secret,
             $this->urlManager->getRedirectUrl(),
-            $this->getNormalizedData()
+            Helper::normalizeData($this->service->data)
         );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getNormalizedData(): array
-    {
-        $result = [];
-
-        foreach ($this->service->data as $item) {
-            $result[$item['key']] = $item['value'];
-        }
-
-        return $result;
     }
 }

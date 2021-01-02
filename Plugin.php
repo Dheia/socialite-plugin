@@ -2,6 +2,7 @@
 
 use Backend;
 use Dubk0ff\Socialite\Classes\Helpers\ProviderHelper;
+use Dubk0ff\Socialite\Components\SocialiteButtons;
 use Dubk0ff\Socialite\Components\SocialiteLogin;
 use Dubk0ff\Socialite\Components\SocialiteRedirect;
 use RainLab\User\Models\User as UserModel;
@@ -79,7 +80,8 @@ class Plugin extends PluginBase
     {
         return [
             SocialiteLogin::class => SocialiteLogin::$componentName,
-            SocialiteRedirect::class => SocialiteRedirect::$componentName
+            SocialiteRedirect::class => SocialiteRedirect::$componentName,
+            SocialiteButtons::class => 'socialiteButtons'
         ];
     }
 

@@ -61,6 +61,8 @@ class Service extends Model
         'updated_at'
     ];
 
+    /***** EVENTS *****/
+
     /**
      * @param $fields
      * @param null $context
@@ -69,9 +71,11 @@ class Service extends Model
     public function filterFields($fields, $context = null)
     {
         if (isset($fields->provider->value)) {
-            $urlManager = new UrlManager($fields->provider->value);
+            if ($context === 'create') {
+                $fields->{'title'}->value = ProviderHelper::getProviderName($fields->provider->value);
+            }
 
-            $fields->{'title'}->value = ProviderHelper::getProviderName($fields->provider->value);
+            $urlManager = new UrlManager($fields->provider->value);
             $fields->{'_login'}->value = $urlManager->getLoginUrl();
             $fields->{'_redirect'}->value = $urlManager->getRedirectUrl();
         }
