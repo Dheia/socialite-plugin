@@ -7,6 +7,10 @@ use Redirect;
 use Socialite;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class SocialiteRedirect
+ * @package Dubk0ff\Socialite\Components
+ */
 class SocialiteRedirect extends BaseSocialiteComponent
 {
     /** @var string */
