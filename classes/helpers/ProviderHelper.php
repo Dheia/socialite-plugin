@@ -34,10 +34,6 @@ class ProviderHelper
             'name'      => 'Odnoklassniki',
             'listener'  => 'SocialiteProviders\Odnoklassniki\OdnoklassnikiExtendSocialite@handle'
         ],
-        'twitter' => [
-            'name'      => 'Twitter',
-            'listener'  => 'SocialiteProviders\Twitter\TwitterExtendSocialite@handle'
-        ],
         'vkontakte' => [
             'name'      => 'VKontakte',
             'listener'  => 'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle'

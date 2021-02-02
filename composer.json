@@ -18,7 +18,6 @@
         "socialiteproviders/google": "^4.1",
         "socialiteproviders/instagram": "^4.1",
         "socialiteproviders/odnoklassniki": "^4.1",
-        "socialiteproviders/twitter": "^4.1",
         "socialiteproviders/vkontakte": "^4.2",
         "socialiteproviders/yandex": "^4.1"
     },
