@@ -1,4 +1,4 @@
-MIT License UPDATE
+MIT License
 
 Copyright (c) 2020 Valentin
 
