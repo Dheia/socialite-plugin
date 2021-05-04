@@ -1,5 +1,5 @@
 {
-    "name": "dubk0ff/oc-Socialite-plugin",
+    "name": "dubk0ff/socialite-plugin",
     "type": "october-plugin",
     "description": "Socialite plugin for October CMS",
     "keywords": ["october", "octobercms", "cms", "user", "socialite"],
