@@ -1,0 +1,59 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    provider:
+        label: Провайдер
+        span: left
+        type: dropdown
+        placeholder: -- select provider --
+
+    title:
+        label: Название
+        span: right
+        type: text
+        placeholder: ВКонтакте
+        dependsOn: provider
+
+    client_id:
+        label: ID приложения
+        span: left
+        type: text
+        comment: Идентификатор приложения стороннего ресурса
+
+    client_secret:
+        label: Защищённый ключ
+        span: right
+        type: text
+        comment: Защищённый ключ приложения стороннего ресурса
+
+    _login:
+        label: Авторизация
+        span: left
+        type: text
+        readOnly: true
+        comment: URL адрес авторизации пользователя
+        dependsOn: provider
+
+    _redirect:
+        label: Переадресация
+        span: right
+        type: text
+        readOnly: true
+        comment: URL адрес переадресации пользователя после успешной авторизации
+        dependsOn: provider
+
+    data:
+        type: repeater
+        prompt: Добавить дополнительные поля
+        form:
+            fields:
+                key:
+                    label: Ключ
+                    span: left
+                    type: text
+                value:
+                    label: Значение
+                    span: right
+                    type: text
